@@ -1,7 +1,27 @@
 aid: atolls
-name: atolls
-description: 'atolls is a company surfaced as a portfolio company of hv-capital and added to the API Evangelist
-  network as a stub for enrichment. Sector: consumer. This profile is a lead awaiting the enrichment pipeline.'
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/atolls.png
+name: Atolls
+description: 'Atolls (formerly Global Savings Group) is a Munich-based consumer commerce-content
+  company that operates the world''s largest shopping engagement platform, running coupon,
+  cashback, deals, and shopping-community destinations across more than 20 markets. Its
+  brand portfolio includes Coupons.com, Cuponation, iGraal, Shoop, Pouch, mydealz, hotukdeals,
+  and Deala, connecting millions of shoppers with offers from thousands of retailers and
+  brands through affiliate marketing, cashback, and AI-enhanced shopping insights. Founded
+  in 2012 as CupoNation with Rocket Internet and rebranded to Atolls in 2024, it is backed
+  by investors including HV Capital, RTP Global, and Rocket Internet. Atolls does not expose
+  a public developer API; this profile captures its public consumer, security, and legal
+  surface for the API Evangelist network.'
 url: https://raw.githubusercontent.com/api-evangelist/atolls/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,13 +31,47 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Consumer
+- E-Commerce
+- Affiliate Marketing
+- Cashback
+- Coupons
+- Shopping
+- Retail
 apis: []
+common:
+- type: VulnerabilityDisclosure
+  url: security/atolls-vulnerability-disclosure.yml
+- type: Security
+  url: https://atolls.com/disclosure-policy
+- type: DomainSecurity
+  url: security/atolls-domain-security.yml
+- type: Website
+  url: https://atolls.com
+- type: About
+  url: https://atolls.com/about-us/
+- type: Blog
+  url: https://atolls.com/insights/
+- type: Careers
+  url: https://atolls.com/careers/
+- type: PrivacyPolicy
+  url: https://atolls.com/privacy-policy/
+- type: Imprint
+  url: https://atolls.com/imprint/
+- type: SecurityTxt
+  url: well-known/atolls-security.txt
+- type: WellKnown
+  url: well-known/atolls-well-known.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

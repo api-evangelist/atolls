@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://atolls.com/.well-known/
+host: https://atolls.com
+documents:
+- path: /.well-known/security.txt          # RFC 9116
+  status: 200
+  file: atolls-security.txt
+- path: /.well-known/openid-configuration   # OIDC discovery
+  status: 404
+- path: /.well-known/oauth-authorization-server  # RFC 8414
+  status: 404
+- path: /.well-known/api-catalog             # RFC 9727
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+notes: >-
+  atolls.com publishes a real RFC 9116 security.txt pointing at an Intigriti-managed
+  vulnerability disclosure program. robots.txt additionally carries Content-Signal
+  directives (search=yes, ai-train=no, use=reference) and disallows major AI crawlers
+  (GPTBot, ClaudeBot, Google-Extended, CCBot, Bytespider, Amazonbot, Applebot-Extended,
+  meta-externalagent). No OAuth/OIDC/API-catalog discovery documents are published;
+  Atolls exposes no public developer API.

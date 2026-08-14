@@ -19,9 +19,15 @@ description: 'Atolls (formerly Global Savings Group) is a Munich-based consumer 
   and Deala, connecting millions of shoppers with offers from thousands of retailers and
   brands through affiliate marketing, cashback, and AI-enhanced shopping insights. Founded
   in 2012 as CupoNation with Rocket Internet and rebranded to Atolls in 2024, it is backed
-  by investors including HV Capital, RTP Global, and Rocket Internet. Atolls does not expose
-  a public developer API; this profile captures its public consumer, security, and legal
-  surface for the API Evangelist network.'
+  by investors including HV Capital, RTP Global, and Rocket Internet. Atolls publishes no
+  public developer API, developer portal, OpenAPI document or SDK — api., developer. and
+  docs.atolls.com do not resolve — but it does serve real machine-readable documents: RFC
+  9116 security.txt files on five owned hosts pointing at a single group-wide Intigriti
+  vulnerability disclosure program, and OpenID Connect discovery documents on seven Pepper
+  community properties (mydealz, hotukdeals, Dealabs, Preisjaeger, Chollometro, Pepper PL,
+  Promodescuentos) that expose an OAuth 2.0 authorization server for consumer sign-in.
+  This profile captures that security, identity, and legal surface for the API Evangelist
+  network.'
 url: https://raw.githubusercontent.com/api-evangelist/atolls/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -31,7 +37,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 tags:
 - Company
 - Consumer
@@ -41,6 +47,8 @@ tags:
 - Coupons
 - Shopping
 - Retail
+- Identity
+- OpenID Connect
 apis: []
 common:
 - type: VulnerabilityDisclosure
@@ -65,13 +73,30 @@ common:
   url: well-known/atolls-security.txt
 - type: WellKnown
   url: well-known/atolls-well-known.yml
+- type: Authentication
+  url: authentication/atolls-authentication.yml
+- type: OpenIDConnect
+  url: well-known/atolls-mydealz-openid-configuration.json
+- type: OAuthScopes
+  url: scopes/atolls-scopes.yml
+- type: Conformance
+  url: conformance/atolls-conformance.yml
+- type: ErrorCatalog
+  url: errors/atolls-problem-types.yml
+- type: LLMsTxt
+  url: llms/atolls-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 11
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery run across the whole owned-brand portfolio rather than the
+    corporate host. Found and saved verbatim: four additional RFC 9116 security.txt
+    files and two OpenID Connect discovery documents. No OpenAPI, agent card, SDK or
+    developer portal exists on any Atolls host.

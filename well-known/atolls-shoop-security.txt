@@ -1,0 +1,15 @@
+# Our Disclosure policy:
+Policy: https://atolls.com/disclosure-policy 
+
+# Our Vulnerability Disclosure Program managed by Intigriti.com
+# Please submit any Vulnerabilities via this Program
+# Program: https://app.intigriti.com/programs/atolls/atollsvdp/detail
+
+# Our Security Address
+Contact: mailto:security@atolls.com
+
+Expires: 2027-06-29T21:59:00.000Z
+
+Preferred-Languages: en
+
+Canonical: https://shoop.de/.well-known/security.txt

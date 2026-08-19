@@ -1,0 +1,90 @@
+generated: '2026-08-13'
+method: probed
+source: https://www.mydealz.de/.well-known/openid-configuration
+note: >-
+  Atolls publishes no developer portal and no OpenAPI, so there are no OpenAPI
+  securitySchemes to derive from. What it DOES publish — found in this round by
+  probing every owned brand host rather than the corporate host — is a real
+  OpenID Connect / RFC 8414 discovery document on seven Pepper community
+  properties. This artifact is derived from those published discovery documents
+  and from anonymous, unauthenticated calls to the token endpoint. No credentials
+  were used and no access control was bypassed.
+ownership: >-
+  The discovery documents self-declare issuer https://www.mydealz.de and
+  https://www.hotukdeals.com — both Atolls-operated Pepper community brands, each of
+  which publishes a security.txt naming atolls.com's disclosure policy and
+  security@atolls.com, and DMARC reports routed to dmarc_rua@atolls.com.
+
+schemes:
+- id: pepper-oidc
+  type: openIdConnect
+  name: Pepper community OpenID Connect / OAuth 2.0
+  discovery: /.well-known/openid-configuration
+  issuers:
+  - https://www.mydealz.de
+  - https://www.hotukdeals.com
+  - https://www.dealabs.com
+  - https://www.preisjaeger.at
+  - https://www.chollometro.com
+  - https://www.pepper.pl
+  - https://www.promodescuentos.com
+  endpoints:
+    authorization: '{issuer}/oauth/authorize'
+    token: '{issuer}/oauth/token'
+    jwks: '{issuer}/oauth/jwks'
+  grant_types_supported:
+  - authorization_code
+  - client_credentials
+  - refresh_token
+  response_types_supported:
+  - code
+  subject_types_supported:
+  - public
+  id_token_signing_alg_values_supported:
+  - RS256
+  token_endpoint_auth_methods_supported:
+  - client_secret_basic
+  - client_secret_post
+  pkce:
+    supported: true
+    code_challenge_methods:
+    - S256
+    - plain
+    note: >-
+      `plain` is still advertised alongside S256. Current OAuth 2.1 / BCP guidance is
+      S256-only for public clients; advertising `plain` is a downgrade path.
+  scopes_supported:
+  - openid
+  - profile
+  - email
+  jwks:
+    url: '{issuer}/oauth/jwks'
+    status: 200
+    keys: RSA / RS256 signing keys served anonymously
+  observed:
+  - probe: POST {issuer}/oauth/token with grant_type=client_credentials and no client_id
+    status: 400
+    content_type: application/json
+    body_shape: RFC 6749 error object with error, error_description and a non-standard `hint`
+  - probe: GET {issuer}/oauth/authorize?response_type=code&client_id=test
+    status: 302
+    note: redirects to {issuer}/login — the authorization endpoint is live and gated by
+      an interactive user session.
+
+gaps:
+- no userinfo_endpoint is advertised in the discovery document
+- no registration_endpoint (RFC 7591 dynamic client registration) is advertised
+- no /.well-known/oauth-authorization-server (RFC 8414 canonical path) — discovery is
+  only at the OIDC path
+- no /.well-known/oauth-protected-resource (RFC 9728), so a client cannot discover
+  which resource server these tokens are for
+- no public client registration path, developer portal, or documented API the issued
+  tokens are meant to call
+
+docs: null
+docs_note: >-
+  No authentication documentation is published. atolls.com/developers,
+  mydealz.de/developers and mydealz.de/api-docs all miss (404, or a soft-200 catch-all
+  on hotukdeals.com), and api./developer./docs.atolls.com do not resolve in DNS.
+  The OIDC discovery document is currently the only machine-readable statement Atolls
+  makes about authentication.

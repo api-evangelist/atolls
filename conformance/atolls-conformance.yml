@@ -1,0 +1,106 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live probes of atolls.com and the Atolls-owned brand hosts; OIDC discovery documents
+  and security.txt files saved under well-known/
+note: >-
+  Atolls publishes no compliance page, no trust center and no certification claims that
+  could be reached without evading a bot challenge, so this file asserts only standards
+  whose conformance is directly observable in a document Atolls serves. Absence of an
+  entry means not observed, not "does not conform".
+standards:
+- id: rfc9116
+  name: security.txt
+  conforms: true
+  evidence: >-
+    Parseable RFC 9116 files served at /.well-known/security.txt on atolls.com,
+    mydealz.de, hotukdeals.com, igraal.com and shoop.de, each carrying Contact, Policy,
+    Expires, Preferred-Languages and Canonical fields. All Expires values are in the
+    future (2027-04-29 / 2027-06-29).
+- id: oidc-discovery
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration returns valid JSON with issuer,
+    authorization_endpoint, token_endpoint, jwks_uri, response_types_supported,
+    subject_types_supported and id_token_signing_alg_values_supported on seven Pepper
+    community hosts. Saved verbatim to well-known/atolls-mydealz-openid-configuration.json
+    and well-known/atolls-hotukdeals-openid-configuration.json.
+  deviations:
+  - no userinfo_endpoint advertised
+  - issuer is the site root rather than a dedicated identity host
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    authorization_code, client_credentials and refresh_token grants advertised; the
+    token endpoint returns a conformant RFC 6749 error object
+    ({"error":"invalid_request","error_description":...}) with HTTP 400 and
+    application/json on an anonymous malformed request. A non-standard `hint` member is
+    added alongside the standard fields.
+- id: rfc7636
+  name: PKCE
+  conforms: true
+  evidence: 'code_challenge_methods_supported: ["plain","S256"]'
+  deviations:
+  - '`plain` is still advertised; OAuth 2.1 guidance is S256-only.'
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server returns 404 on every probed host. The
+    metadata is only reachable at the OIDC discovery path.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource returns 404 on every probed host.
+- id: rfc9727
+  name: API Catalog (.well-known/api-catalog)
+  conforms: false
+  evidence: 404 on atolls.com, mydealz.de and coupons.com; soft-200 HTML on shoop.de and
+    pepper.com, which is not a catalog document.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on atolls.com,
+    coupons.com, mydealz.de and hotukdeals.com, and an HTML shell with a 200 on shoop.de
+    and pepper.com. No AgentCard was found and none was authored.
+- id: content-signals
+  name: Cloudflare Content Signals / robots.txt AI directives
+  conforms: true
+  evidence: >-
+    https://atolls.com/robots.txt (200) declares Content-Signal
+    search=yes, ai-train=no, use=reference and explicitly disallows GPTBot, ClaudeBot,
+    Google-Extended, CCBot, Bytespider, Amazonbot, Applebot-Extended and
+    meta-externalagent, citing Article 4 of EU Directive 2019/790 as an express
+    reservation of rights.
+- id: dmarc
+  name: DMARC
+  conforms: true
+  evidence: >-
+    p=reject on all seven probed domains; mydealz.de, hotukdeals.com, coupons.com and
+    pepper.com route aggregate and forensic reports to dmarc_rua@atolls.com.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document was found on any Atolls host after probing
+    /openapi.json, /openapi.yaml, /swagger.json, /api-docs and /docs on the corporate
+    host and on all six brand hosts. api./developer./docs.atolls.com do not resolve.
+- id: graphql
+  name: GraphQL
+  conforms: partial
+  evidence: >-
+    https://www.coupons.com/api/graphql answers 200 to a POST but returns
+    {"errors":[{"message":"introspection has been disabled"}]}. A GraphQL surface exists
+    and is deliberately closed; no SDL is published and none was fabricated. The
+    mydealz.de and hotukdeals.com /graphql paths answer HTTP 418 with a bot-challenge
+    body.
+compliance_claims: []
+compliance_note: >-
+  No SOC 2, ISO 27001, PCI DSS or comparable certification claim was found on a
+  reachable Atolls page. The corporate site's HTML pages answer 403 to a plain HTTP
+  client (Cloudflare interstitial) and the challenge was not evaded, so this is recorded
+  as "not observed" rather than "absent", and NO Compliance or TrustCenter pointer is
+  emitted.

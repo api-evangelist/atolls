@@ -1,0 +1,40 @@
+generated: '2026-08-13'
+method: probed
+source: https://www.mydealz.de/.well-known/openid-configuration
+note: >-
+  Scopes are taken verbatim from the `scopes_supported` array of the published OIDC
+  discovery documents on the Pepper community hosts. There is no OpenAPI with oauth2
+  securitySchemes to derive from, and Atolls publishes no scopes/permissions reference
+  page, so descriptions below are the standard OpenID Connect Core 1.0 definitions —
+  marked as such — not text Atolls wrote.
+docs: null
+flows:
+- type: authorization_code
+- type: client_credentials
+- type: refresh_token
+issuers:
+- https://www.mydealz.de
+- https://www.hotukdeals.com
+- https://www.dealabs.com
+- https://www.preisjaeger.at
+- https://www.chollometro.com
+- https://www.pepper.pl
+- https://www.promodescuentos.com
+scope_count: 3
+scopes:
+- name: openid
+  description: Required to make the request an OpenID Connect request and receive an ID token.
+  description_source: OpenID Connect Core 1.0 (standard definition — Atolls publishes none)
+- name: profile
+  description: Requests access to the end user's default profile claims.
+  description_source: OpenID Connect Core 1.0 (standard definition — Atolls publishes none)
+- name: email
+  description: Requests access to the email and email_verified claims.
+  description_source: OpenID Connect Core 1.0 (standard definition — Atolls publishes none)
+gaps:
+- >-
+    Only the three baseline OIDC scopes are advertised. No product/resource scopes
+    (deals, threads, cashback, vouchers, user activity) are published, so the discovery
+    document describes identity only — nothing about what an access token may read or
+    write on the Pepper platform.
+- No scopes or permissions reference page exists to enrich these descriptions.

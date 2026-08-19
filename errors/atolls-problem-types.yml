@@ -1,0 +1,52 @@
+generated: '2026-08-13'
+method: probed
+source: 'anonymous POST https://www.mydealz.de/oauth/token'
+format: oauth2
+format_note: >-
+  Not RFC 9457. The only error envelope Atolls serves on a machine-readable surface is
+  the RFC 6749 OAuth 2.0 error object, observed live on the Pepper community token
+  endpoint. There is no OpenAPI to derive 4xx/5xx responses from and no published error
+  reference page, so this catalog is deliberately small and entirely observed.
+envelope:
+  content_type: application/json
+  fields:
+  - name: error
+    required: true
+    description: RFC 6749 error code.
+  - name: error_description
+    required: true
+    description: Human-readable explanation.
+  - name: hint
+    required: false
+    description: >-
+      Non-standard member added by the League OAuth2 Server implementation naming the
+      offending parameter. Not part of RFC 6749; clients should not depend on it.
+problem_types:
+- code: invalid_request
+  status: 400
+  title: The request is malformed or missing a required parameter
+  observed: true
+  observed_at: 'POST /oauth/token (grant_type=client_credentials, no client_id)'
+  body: >-
+    {"error":"invalid_request","error_description":"The request is missing a required
+    parameter, includes an invalid parameter value, includes a parameter more than once,
+    or is otherwise malformed.","hint":"Check the `client_id` parameter"}
+  remediation: Send a registered client_id (and client secret via client_secret_basic or
+    client_secret_post) with the grant request.
+transport_observations:
+- surface: https://www.hotukdeals.com and https://www.shoop.de and https://www.pepper.com
+  behaviour: soft-200
+  detail: >-
+    Unknown paths return HTTP 200 with a full HTML page instead of a 404. On
+    hotukdeals.com the body for /developers is byte-identical (119,213 bytes) to the body
+    for a random nonexistent path. Any consumer — human or agent — that treats a 200 as
+    evidence of a resource will be wrong on these hosts.
+- surface: https://www.mydealz.de/graphql and https://www.hotukdeals.com/graphql
+  behaviour: HTTP 418
+  detail: 'Anti-bot teapot response: {"message":"Whiiiiiiieeee","data":[]}.'
+- surface: https://atolls.com HTML pages
+  behaviour: HTTP 403
+  detail: Cloudflare "Just a moment..." interstitial for a plain HTTP client. Not evaded.
+gaps:
+- No published error reference, error code registry, or RFC 9457 problem+json usage.
+- No documented API surface, therefore no application-level error catalog to derive.

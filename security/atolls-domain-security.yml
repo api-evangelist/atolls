@@ -1,11 +1,46 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: probed
-source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+source: live DNS/TLS/HTTP probes of the corporate host and every Atolls-owned brand host
+note: >-
+  Atolls publishes no API host, so the probe set is the corporate domain plus the
+  consumer brand domains it operates. Every domain enforces DMARC p=reject; none
+  publishes DNSSEC or CAA; HSTS is present only on coupons.com.
 hosts:
 - host: atolls.com
   https: true
   tls_version: TLSv1.3
   cert_expires: Oct  8 06:32:42 2026 GMT
+  hsts: false
+- host: www.mydealz.de
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  5 16:25:09 2026 GMT
+  hsts: false
+- host: www.hotukdeals.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  3 06:59:15 2026 GMT
+  hsts: false
+- host: www.igraal.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 30 23:59:59 2026 GMT
+  hsts: false
+- host: www.shoop.de
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  8 12:54:37 2026 GMT
+  hsts: false
+- host: www.coupons.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  3 09:42:24 2026 GMT
+  hsts: true
+  hsts_header: max-age=31536000
+- host: www.pepper.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 21 05:08:48 2026 GMT
   hsts: false
 domains:
 - domain: atolls.com
@@ -14,3 +49,47 @@ domains:
   spf: true
   dmarc: true
   dmarc_policy: reject
+- domain: mydealz.de
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_rua: dmarc_rua@atolls.com
+- domain: hotukdeals.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_rua: dmarc_rua@atolls.com
+- domain: igraal.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_subdomain_policy: quarantine
+  dmarc_rua: PowerDMARC-hosted aggregate mailbox
+- domain: shoop.de
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_subdomain_policy: none
+  dmarc_rua: PowerDMARC-hosted aggregate mailbox
+- domain: coupons.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_rua: dmarc_rua@atolls.com
+- domain: pepper.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+  dmarc_rua: dmarc_rua@atolls.com

@@ -1,23 +1,206 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://atolls.com/.well-known/
-host: https://atolls.com
-documents:
-- path: /.well-known/security.txt          # RFC 9116
+source: live probes of every Atolls-owned brand host
+note: >-
+  Atolls has no corporate developer host (api.atolls.com, developer.atolls.com and
+  docs.atolls.com do not resolve), so /.well-known/ discovery was probed across the
+  whole owned-brand portfolio instead. Two real document classes are published:
+  RFC 9116 security.txt on five hosts, and — the find of this round — an OpenID
+  Connect / RFC 8414 discovery document on seven Pepper community hosts.
+ownership_note: >-
+  Every host below is proven Atolls-owned from the documents themselves, not from
+  the fetch URL: each brand security.txt names Policy https://atolls.com/disclosure-policy
+  and Contact mailto:security@atolls.com, and mydealz.de, hotukdeals.com, coupons.com
+  and pepper.com all publish DMARC rua/ruf pointing at dmarc_rua@atolls.com.
+
+hosts:
+
+- host: https://atolls.com
+  role: corporate site
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: document
+    file: atolls-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /openapi.json
+    status: 403
+    note: Cloudflare bot challenge ("Just a moment..."), not a spec. Not evaded.
+  - path: /llms.txt
+    status: 404
+
+- host: https://www.mydealz.de
+  role: Pepper community brand (DE)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: document
+    file: atolls-mydealz-security.txt
+  - path: /.well-known/openid-configuration
+    status: 200
+    kind: document
+    file: atolls-mydealz-openid-configuration.json
+    note: real OIDC discovery JSON; issuer https://www.mydealz.de
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+
+- host: https://www.hotukdeals.com
+  role: Pepper community brand (UK)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: document
+    file: atolls-hotukdeals-security.txt
+  - path: /.well-known/openid-configuration
+    status: 200
+    kind: document
+    file: atolls-hotukdeals-openid-configuration.json
+    note: real OIDC discovery JSON; issuer https://www.hotukdeals.com
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /openapi.json
+    status: 200
+    kind: html
+    note: >-
+      SOFT-200 — NOT a spec. The host answers 200 with its category-overview HTML for
+      every unknown path; /openapi.json, /swagger.json, /llms.txt and /developers all
+      return a byte-identical 119,213-byte body. Treated as a miss.
+  - path: /llms.txt
+    status: 200
+    kind: html
+    note: same soft-200 catch-all body. Treated as a miss.
+
+- host: https://www.igraal.com
+  role: cashback brand (FR)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: document
+    file: atolls-igraal-security.txt
+    note: Canonical line points at https://fr.igraal.com/.well-known/security.txt
+  - path: /.well-known/openid-configuration
+    status: 403
+    note: Cloudflare bot challenge, not a document.
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /llms.txt
+    status: 404
+
+- host: https://www.shoop.de
+  role: cashback brand (DE)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: document
+    file: atolls-shoop-security.txt
+    note: Canonical line points at https://shoop.de/.well-known/security.txt
+  - path: /.well-known/openid-configuration
+    status: 200
+    kind: html
+    note: SOFT-200 SPA catch-all — HTML shell, not a document. Treated as a miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    kind: html
+    note: SOFT-200 SPA catch-all — HTML, NOT an agent card. No AgentCard pointer emitted.
+  - path: /llms.txt
+    status: 200
+    kind: html
+    note: SOFT-200 SPA catch-all. Treated as a miss.
+
+- host: https://www.coupons.com
+  role: coupon brand (US)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+
+- host: https://www.pepper.com
+  role: Pepper corporate/community hub
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    kind: html
+    note: >-
+      SOFT-200 — every probed path on this host returns the same HTML error page with a
+      200. No document is served. All paths treated as misses.
+  - path: /.well-known/agent-card.json
+    status: 200
+    kind: html
+    note: SOFT-200 HTML. NOT an agent card. No AgentCard pointer emitted.
+
+# Additional OIDC discovery documents confirmed live (status only; the two saved
+# verbatim above are byte-for-byte the same shape with a different issuer).
+additional_openid_configuration_hosts:
+- host: https://www.dealabs.com
   status: 200
-  file: atolls-security.txt
-- path: /.well-known/openid-configuration   # OIDC discovery
+- host: https://www.preisjaeger.at
+  status: 200
+- host: https://www.chollometro.com
+  status: 200
+- host: https://www.pepper.pl
+  status: 200
+- host: https://www.promodescuentos.com
+  status: 200
+- host: https://www.pepper.it
+  status: 200
+  note: HTML shell, not JSON — treated as a miss.
+- host: https://www.pepper.ru
   status: 404
-- path: /.well-known/oauth-authorization-server  # RFC 8414
-  status: 404
-- path: /.well-known/api-catalog             # RFC 9727
-  status: 404
-- path: /.well-known/ai-plugin.json
-  status: 404
+
+content_signals:
+  source: https://atolls.com/robots.txt
+  status: 200
+  signal: search=yes, ai-train=no, use=reference
+  disallowed_agents:
+  - Amazonbot
+  - Applebot-Extended
+  - Bytespider
+  - CCBot
+  - ClaudeBot
+  - CloudflareBrowserRenderingCrawler
+  - Google-Extended
+  - GPTBot
+  - meta-externalagent
+  note: >-
+    Cloudflare-managed content-signal block. This profile was assembled from
+    /.well-known/ documents and DNS/TLS records only, consistent with
+    use=reference; no page content was collected for AI training.
+
 notes: >-
-  atolls.com publishes a real RFC 9116 security.txt pointing at an Intigriti-managed
-  vulnerability disclosure program. robots.txt additionally carries Content-Signal
-  directives (search=yes, ai-train=no, use=reference) and disallows major AI crawlers
-  (GPTBot, ClaudeBot, Google-Extended, CCBot, Bytespider, Amazonbot, Applebot-Extended,
-  meta-externalagent). No OAuth/OIDC/API-catalog discovery documents are published;
-  Atolls exposes no public developer API.
+  No API catalog (RFC 9727), ai-plugin.json, oauth-protected-resource or A2A agent
+  card is published on any Atolls host. Several brand hosts answer 200 with an HTML
+  shell for arbitrary /.well-known/* paths — those are recorded as misses, not hits.

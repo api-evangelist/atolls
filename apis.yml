@@ -59,7 +59,6 @@ tags:
 - Shopping
 - Retail
 - Identity
-- OpenID Connect
 apis: []
 common:
 - type: VulnerabilityDisclosure
@@ -111,3 +110,5 @@ x-enrichment:
     corporate host. Found and saved verbatim: four additional RFC 9116 security.txt
     files and two OpenID Connect discovery documents. No OpenAPI, agent card, SDK or
     developer portal exists on any Atolls host.
+x-tags-removed:
+- OpenID Connect

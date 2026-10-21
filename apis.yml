@@ -1,4 +1,5 @@
 aid: atolls
+
 deliveryModel:
   model: unknown
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - none
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -21,8 +23,11 @@ accessModel:
   source: []
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/atolls.png
+
 name: Atolls
+
 description: 'Atolls (formerly Global Savings Group) is a Munich-based consumer commerce-content
   company that operates the world''s largest shopping engagement platform, running coupon,
   cashback, deals, and shopping-community destinations across more than 20 markets. Its
@@ -39,16 +44,26 @@ description: 'Atolls (formerly Global Savings Group) is a Munich-based consumer 
   Promodescuentos) that expose an OAuth 2.0 authorization server for consumer sign-in.
   This profile captures that security, identity, and legal surface for the API Evangelist
   network.'
+
 url: https://raw.githubusercontent.com/api-evangelist/atolls/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - hv-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
+
+x-tier: profiled
+
+x-tier-reason: enrichment pass 2026-10-20 (local-v5; was portfolio-lead)
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-10-06'
+
 tags:
 - Company
 - Consumer
@@ -59,8 +74,28 @@ tags:
 - Shopping
 - Retail
 - Identity
-apis: []
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+
 common:
+- type: SecurityTxt
+  url: well-known/atolls-shoop-security.txt
+- type: SecurityTxt
+  url: well-known/atolls-mydealz-security.txt
+- type: SecurityTxt
+  url: well-known/atolls-igraal-security.txt
+- type: SecurityTxt
+  url: well-known/atolls-hotukdeals-security.txt
+- type: Hosts
+  url: hosts/atolls-hosts.yml
+- type: Vendors
+  url: vendors/atolls-vendors.yml
+- type: Newsroom
+  url: https://atolls.com/insights/category/news/
 - url: https://atolls.com/insights/feed/
   type: BlogRSS
 - type: VulnerabilityDisclosure
@@ -85,32 +120,42 @@ common:
   url: well-known/atolls-security.txt
 - type: WellKnown
   url: well-known/atolls-well-known.yml
-- type: Authentication
-  url: authentication/atolls-authentication.yml
 - type: OpenIDConnect
   url: well-known/atolls-mydealz-openid-configuration.json
 - type: OAuthScopes
   url: scopes/atolls-scopes.yml
 - type: Conformance
   url: conformance/atolls-conformance.yml
-- type: ErrorCatalog
-  url: errors/atolls-problem-types.yml
-- type: LLMsTxt
-  url: llms/atolls-llms.txt
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
-x-enrichment:
-  date: '2026-08-13'
-  status: enriched
-  artifacts_added: 11
-  pass: local-v1
-  note: >-
-    Contract discovery run across the whole owned-brand portfolio rather than the
-    corporate host. Found and saved verbatim: four additional RFC 9116 security.txt
-    files and two OpenID Connect discovery documents. No OpenAPI, agent card, SDK or
-    developer portal exists on any Atolls host.
+
+apis: []
+
 x-tags-removed:
 - OpenID Connect
+x-coverage:
+  state: none
+  reason: no-developer-program
+  method: derived
+  generated: '2026-10-20'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: >-
+    the company publishes no developer documentation host and no machine-readable contract on its own domain
+  evidence:
+  - url: https://atolls.com
+    status: 200
+
+x-enrichment:
+  date: '2026-10-20'
+  status: nochange
+  artifacts_added: 0
+  pass: local-v5
+
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: Atolls runs consumer coupon and cashback brands and publishes no developer API, portal or contract; api.atolls.com does not resolve and only security.txt and Pepper OIDC discovery documents are machine-readable.
+  evidence:
+  - url: https://api.atolls.com/
+    status: 0
+  - url: https://atolls.com
+    status: 200
+  checked: '2026-10-20'
